@@ -1,0 +1,24 @@
+#!/bin/bash
+# Use WPScan in Kali Linux to scan multiple domains
+#
+
+now=$(date +"%m_%d_%Y")
+domains='testdomain1.com testdomain2.com'
+
+# Output destination
+destination=~/Desktop/wpscans
+
+#Update Database 
+	echo "Updating WPScan Database"
+	wpscan --update
+	sleep 5
+
+for n in $domains; do
+
+    echo -e "\nScanning $n ... "
+    wpscan --random-agent  --url $n \
+        --batch \
+	--no-banner \
+        --follow-redirection > $destination/$n.$now.log
+
+done
